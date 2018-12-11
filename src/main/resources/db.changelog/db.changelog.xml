@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="Init db scheme" author="Victoria1996">
+        <sqlFile path="db.changelog/sql/ddl.sql" dbms="mssql"/>
+    </changeSet>
+
+    <changeSet id="create sequence" author="Victoria1996">
+        <sql>CREATE SEQUENCE client_sequence
+            START WITH 1
+            INCREMENT BY 1
+            MINVALUE 1
+            MAXVALUE 9223372036854775807
+            NO CYCLE
+            CACHE 10;
+        </sql>
+        <sql>CREATE SEQUENCE role_sequence
+            START WITH 1
+            INCREMENT BY 1
+            MINVALUE 1
+            MAXVALUE 9223372036854775807
+            NO CYCLE
+            CACHE 10;
+        </sql>
+        <sql>CREATE SEQUENCE event_sequence
+            START WITH 1
+            INCREMENT BY 1
+            MINVALUE 1
+            MAXVALUE 9223372036854775807
+            NO CYCLE
+            CACHE 10;
+        </sql>
+        <sql>CREATE SEQUENCE place_sequence
+            START WITH 1
+            INCREMENT BY 1
+            MINVALUE 1
+            MAXVALUE 9223372036854775807
+            NO CYCLE
+            CACHE 10;
+        </sql>
+        <sql>CREATE SEQUENCE reservation_event_sequence
+            START WITH 1
+            INCREMENT BY 1
+            MINVALUE 1
+            MAXVALUE 9223372036854775807
+            NO CYCLE
+            CACHE 10;
+        </sql>
+        <sql>CREATE SEQUENCE reservation_place_sequence
+            START WITH 1
+            INCREMENT BY 1
+            MINVALUE 1
+            MAXVALUE 9223372036854775807
+            NO CYCLE
+            CACHE 10;
+        </sql>
+        <sql>CREATE SEQUENCE comment_sequence
+            START WITH 1
+            INCREMENT BY 1
+            MINVALUE 1
+            MAXVALUE 9223372036854775807
+            NO CYCLE
+            CACHE 10;
+        </sql>
+    </changeSet>
+
+    <changeSet id="Init Role table" author="Victoria1996">
+        <insert tableName="Role">
+            <column name="id_role" valueNumeric="1"/>
+            <column name="role_name" value="GENERAL_CLIENT"/>
+        </insert>
+        <insert tableName="Role">
+            <column name="id_role" valueNumeric="2"/>
+            <column name="role_name" value="BUSINESS_CLIENT"/>
+        </insert>
+        <insert tableName="Role">
+            <column name="id_role" valueNumeric="3"/>
+            <column name="role_name" value="ADMINISTRATOR"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="Create Comment table" author="Victoria1996">
+        <createTable tableName="Comment">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="place_id" type="int">
+                <constraints foreignKeyName="FK_comment_place_id" references="place(id_place)" nullable="false"/>
+            </column>
+            <column name="client_id" type="int">
+                <constraints foreignKeyName="FK_comment_client_id" references="client(id_client)"/>
+            </column>
+            <column name="text" type="nvarchar(max)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="related_comment_id" type="bigint"/>
+            <column name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified" type="datetime"/>
+            <column name="deleted" type="datetime"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="Added oprional field to reservation place and event" author="Victoria1996">
+        <addColumn tableName="Reservation_place">
+            <column name="comment" type="nvarchar(max)"/>
+            <column name="user_name" type="nvarchar(max)"/>
+            <column name="user_phone_number" type="nvarchar(max)"/>
+        </addColumn>
+        <addColumn tableName="Reservation_event">
+            <column name="comment" type="nvarchar(max)"/>
+            <column name="user_name" type="nvarchar(max)"/>
+            <column name="user_phone_number" type="nvarchar(max)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

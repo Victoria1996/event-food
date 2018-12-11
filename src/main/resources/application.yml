@@ -1,0 +1,20 @@
+server:
+  port: 8001
+
+spring:
+  jpa:
+    database: sql_server
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: user
+    password: pwd
+    url: jdbc:sqlserver://localhost:1433;DatabaseName=event-food
+    hikari:
+      maximum-pool-size: 20
+  liquibase:
+    enabled: true
+    change-log: classpath:db.changelog/db.changelog.xml

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOGS" value="./logs"/>
+
+    <appender name="ACCESS_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOGS}/event-food-service-access.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>common</pattern>
+        </encoder>
+    </appender>
+    <appender-ref ref="ACCESS_FILE"/>
+</configuration>
