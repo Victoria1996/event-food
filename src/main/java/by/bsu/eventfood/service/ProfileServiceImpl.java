@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static by.bsu.eventfood.model.RoleName.BUSINESS_CLIENT;
 import static by.bsu.eventfood.model.RoleName.GENERAL_CLIENT;
 import static java.util.stream.Collectors.toList;
@@ -55,22 +57,29 @@ public class ProfileServiceImpl implements ProfileService {
         }
 
         if (GENERAL_CLIENT.equals(roleName)) {
+            profileResource.addAllEvents(mapToShortEvents(clientId));
 
-            profileResource.addAllEvents(reservationEventRepository
-                    .findAllByClientId(clientId)
-                    .stream()
-                    .map(re -> new ShortEventResource(re.getEvent()))
-                    .collect(toList()));
-
-            profileResource.addAllPlaces(reservationPlaceRepository.
-                    findAllByClientId(clientId)
-                    .stream()
-                    .map(rp -> new ShortPlaceResource(rp.getPlace()))
-                    .collect(toList()));
+            profileResource.addAllPlaces(mapToShortPlaces(clientId));
         }
 
 
         return profileResource;
+    }
+
+    private List<ShortEventResource> mapToShortEvents(Long id) {
+        return reservationEventRepository
+                .findAllByClientId(id)
+                .stream()
+                .map(re -> new ShortEventResource(re.getEvent()))
+                .collect(toList());
+    }
+
+    private List<ShortPlaceResource> mapToShortPlaces(Long id) {
+        return reservationPlaceRepository.
+                findAllByClientId(id)
+                .stream()
+                .map(rp -> new ShortPlaceResource(rp.getPlace()))
+                .collect(toList());
     }
 
     @Override
@@ -78,5 +87,14 @@ public class ProfileServiceImpl implements ProfileService {
         return clientRepository.findById(id)
                 .map(ProfileResource::new)
                 .orElse(null);
+    }
+
+    @Override
+    public List<ShortPlaceResource> getClientPlaces(Client client) {
+        return placeRepository
+                .findAllPlaceByClientId(client.getId())
+                .stream()
+                .map(ShortPlaceResource::new)
+                .collect(toList());
     }
 }

@@ -45,6 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/event/**", "/place/**")
                         .hasAuthority(BUSINESS_CLIENT.name())
+                    .antMatchers(HttpMethod.GET, "/profile/add-event")
+                        .hasAuthority(BUSINESS_CLIENT.name())
                     .antMatchers(HttpMethod.POST, "/comment/**")
                         .hasAuthority(GENERAL_CLIENT.name())
                     .antMatchers(HttpMethod.POST, "/reservation/**")
