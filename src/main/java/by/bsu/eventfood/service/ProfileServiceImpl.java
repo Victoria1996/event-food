@@ -5,10 +5,7 @@ import by.bsu.eventfood.controller.resource.ProfileResource.ShortEventResource;
 import by.bsu.eventfood.controller.resource.ProfileResource.ShortPlaceResource;
 import by.bsu.eventfood.model.Client;
 import by.bsu.eventfood.model.RoleName;
-import by.bsu.eventfood.repository.EventRepository;
-import by.bsu.eventfood.repository.PlaceRepository;
-import by.bsu.eventfood.repository.ReservationEventRepository;
-import by.bsu.eventfood.repository.ReservationPlaceRepository;
+import by.bsu.eventfood.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +17,10 @@ import static java.util.stream.Collectors.toList;
 @Service
 @Slf4j
 public class ProfileServiceImpl implements ProfileService {
+
+    @Autowired
+    private ClientRepository clientRepository;
+
     @Autowired
     private EventRepository eventRepository;
 
@@ -70,5 +71,12 @@ public class ProfileServiceImpl implements ProfileService {
 
 
         return profileResource;
+    }
+
+    @Override
+    public ProfileResource getProfileInfo(Long id) {
+        return clientRepository.findById(id)
+                .map(ProfileResource::new)
+                .orElse(null);
     }
 }

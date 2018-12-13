@@ -5,4 +5,6 @@ import by.bsu.eventfood.model.Client;
 
 public interface ProfileService {
     ProfileResource getCurrentProfileInfo(Client client);
+
+    ProfileResource getProfileInfo(Long id);
 }
