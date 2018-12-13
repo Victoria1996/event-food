@@ -7,6 +7,7 @@ import by.bsu.eventfood.security.CustomUserDetails;
 import by.bsu.eventfood.service.PlaceService;
 import by.bsu.eventfood.service.RoleActionUrlResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,9 +35,16 @@ public class PlaceController {
     }
 
     @PatchMapping("/update/{placeId}")
-    public void updateEvent(@RequestBody AddPlaceDto addEventDto,
-                            @PathVariable Long placeId) {
+    public ResponseEntity updatePlace(@RequestBody AddPlaceDto addEventDto,
+                                      @PathVariable Long placeId) {
         placeService.updatePlace(addEventDto, placeId);
+
+        return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getPlace(@PathVariable String id) {
+
+        return ResponseEntity.ok().build();
+    }
 }

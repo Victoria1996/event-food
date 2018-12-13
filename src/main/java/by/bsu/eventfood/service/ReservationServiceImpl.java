@@ -1,6 +1,9 @@
 package by.bsu.eventfood.service;
 
 import by.bsu.eventfood.controller.dto.ReservationDto;
+import by.bsu.eventfood.model.Client;
+import by.bsu.eventfood.model.ReservationEvent;
+import by.bsu.eventfood.model.ReservationPlace;
 import by.bsu.eventfood.model.ReservationType;
 import by.bsu.eventfood.repository.ReservationEventRepository;
 import by.bsu.eventfood.repository.ReservationPlaceRepository;
@@ -22,17 +25,23 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationMapper reservationMapper;
 
     @Override
-    public void reserve(ReservationDto dto) {
+    public void reserve(ReservationDto dto, Client client) {
         ReservationType reservationType = dto.getType();
 
         switch (reservationType) {
             case EVENT:
-                eventRepository.save(reservationMapper.mapEvent(dto));
+                ReservationEvent reservationEvent = reservationMapper.mapEvent(dto);
+                reservationEvent.setClient(client);
+
+                eventRepository.save(reservationEvent);
 
                 log.info("Event reservation was saved");
                 break;
             case PLACE:
-                placeRepository.save(reservationMapper.mapPlace(dto));
+                ReservationPlace reservationPlace = reservationMapper.mapPlace(dto);
+                reservationPlace.setClient(client);
+
+                placeRepository.save(reservationPlace);
 
                 log.info("Place reservation was saved");
                 break;

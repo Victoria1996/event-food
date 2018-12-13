@@ -39,7 +39,6 @@ public abstract class PlaceMapper {
         return mapListToJsonString(typesOfTables);
     }
 
-
     private String mapListToJsonString(List dtos) {
         String result = EMPTY;
 

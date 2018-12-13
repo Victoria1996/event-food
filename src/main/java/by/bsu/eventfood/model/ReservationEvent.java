@@ -20,7 +20,7 @@ public class ReservationEvent {
     @Id
     @SequenceGenerator(name = "reservationEventSequenceGenerator", sequenceName = "reservation_event_sequence", allocationSize = 1)
     @GeneratedValue(generator = "reservationEventSequenceGenerator", strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_resEv")
+    @Column(name = "id_reservation")
     private Long id;
 
     @ManyToOne
@@ -31,7 +31,7 @@ public class ReservationEvent {
     @JoinColumn(name = "id_client")
     private Client client;
 
-    @Column(name = "reservation_time")
+    @Column(name = "reservation_date")
     @Temporal(TIMESTAMP)
     private Date reservationTime;
 

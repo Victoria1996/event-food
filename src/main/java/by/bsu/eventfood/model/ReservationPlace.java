@@ -31,7 +31,7 @@ public class ReservationPlace {
     @JoinColumn(name = "id_client")
     private Client client;
 
-    @Column(name = "reservation_time")
+    @Column(name = "reservation_date")
     @Temporal(TIMESTAMP)
     private Date reservationTime;
 

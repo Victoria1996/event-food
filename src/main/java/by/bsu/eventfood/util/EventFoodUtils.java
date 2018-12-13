@@ -23,4 +23,8 @@ public class EventFoodUtils {
 
         return calendar.getTime();
     }
+
+    public static boolean isDateExpired(Date date) {
+        return date.after(new Date());
+    }
 }

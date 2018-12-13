@@ -77,9 +77,10 @@ CREATE TABLE [dbo].[Reservation_place] (
   [id_reservation] [int]  NOT NULL,
   [id_place]       [int]  NULL,
   [id_client]      [int]  NULL,
-  [reserv_date]    [date] NULL,
+  [reservation_date] [date] NULL,
   [created]        [date] NULL,
   [modified]       [date] NULL,
+  [deleted]    [date] NULL,
   CONSTRAINT [PK_Reservation_place] PRIMARY KEY CLUSTERED
     (
       [id_reservation] ASC
@@ -89,16 +90,16 @@ CREATE TABLE [dbo].[Reservation_place] (
 ) ON [PRIMARY]
 
 CREATE TABLE [dbo].[Reservation_event] (
-  [id_resEv]   [int]  NOT NULL,
+  [id_reservation] [int]  NOT NULL,
   [id_event]   [int]  NULL,
   [id_client]  [int]  NULL,
-  [resEv_date] [date] NULL,
+  [reservation_date] [date] NULL,
   [created]    [date] NULL,
   [modified]   [date] NULL,
   [deleted]    [date] NULL,
   CONSTRAINT [PK_Reservation_event] PRIMARY KEY CLUSTERED
     (
-      [id_resEv] ASC
+      [id_reservation] ASC
     )
     WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
     ON [PRIMARY]

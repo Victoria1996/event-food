@@ -1,13 +1,9 @@
 package by.bsu.eventfood.service.mapper;
 
-import by.bsu.eventfood.controller.dto.AddEventDto;
 import by.bsu.eventfood.controller.dto.ReservationDto;
 import by.bsu.eventfood.model.ReservationEvent;
 import by.bsu.eventfood.model.ReservationPlace;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -16,17 +12,21 @@ import static by.bsu.eventfood.util.EventFoodUtils.parseDate;
 
 @Mapper(uses = DataMapper.class)
 @Component
+//TODO make common interface for hibernate entities.
 public interface ReservationMapper {
 
-    @Mapping(target = "place", source = "id")
+    @Mappings({
+            @Mapping(target = "place", source = "id"),
+            @Mapping(target = "id", source = "id", ignore = true)})
     ReservationPlace mapPlace(ReservationDto dto);
 
-    @Mapping(target = "event", source = "id")
+    @Mappings({
+            @Mapping(target = "event", source = "id"),
+            @Mapping(target = "id", source = "id", ignore = true)})
     ReservationEvent mapEvent(ReservationDto dto);
 
     @AfterMapping
-    //TODO refacto
-    default void afterMappingPlace(@MappingTarget ReservationPlace place, AddEventDto dto) {
+    default void afterMappingPlace(@MappingTarget ReservationPlace place, ReservationDto dto) {
         Date reservationDate = parseDate(dto.getDate(),
                 dto.getHoursStart(), dto.getMinuteStart());
 
@@ -37,9 +37,7 @@ public interface ReservationMapper {
     }
 
     @AfterMapping
-
-    //TODO refactor
-    default void afterMappingEvent(@MappingTarget ReservationEvent event, AddEventDto dto) {
+    default void afterMappingEvent(@MappingTarget ReservationEvent event, ReservationDto dto) {
         Date reservationDate = parseDate(dto.getDate(),
                 dto.getHoursStart(), dto.getMinuteStart());
 
