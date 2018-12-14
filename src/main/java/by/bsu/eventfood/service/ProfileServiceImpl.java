@@ -1,8 +1,8 @@
 package by.bsu.eventfood.service;
 
 import by.bsu.eventfood.controller.resource.ProfileResource;
-import by.bsu.eventfood.controller.resource.ProfileResource.ShortEventResource;
-import by.bsu.eventfood.controller.resource.ProfileResource.ShortPlaceResource;
+import by.bsu.eventfood.controller.resource.ShortEventResource;
+import by.bsu.eventfood.controller.resource.ShortPlaceResource;
 import by.bsu.eventfood.model.Client;
 import by.bsu.eventfood.model.RoleName;
 import by.bsu.eventfood.repository.*;

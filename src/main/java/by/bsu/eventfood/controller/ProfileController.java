@@ -1,7 +1,7 @@
 package by.bsu.eventfood.controller;
 
 import by.bsu.eventfood.controller.resource.ProfileResource;
-import by.bsu.eventfood.controller.resource.ProfileResource.ShortPlaceResource;
+import by.bsu.eventfood.controller.resource.ShortPlaceResource;
 import by.bsu.eventfood.security.CustomUserDetails;
 import by.bsu.eventfood.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;

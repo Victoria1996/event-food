@@ -2,6 +2,7 @@ package by.bsu.eventfood.controller;
 
 import by.bsu.eventfood.controller.dto.AddPlaceDto;
 import by.bsu.eventfood.controller.dto.ResponseDto;
+import by.bsu.eventfood.controller.resource.PlaceResourceWithDescAndTime;
 import by.bsu.eventfood.model.Client;
 import by.bsu.eventfood.security.CustomUserDetails;
 import by.bsu.eventfood.service.PlaceService;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static by.bsu.eventfood.service.RoleActionUrlResolver.ActionUrl.ADD_PLACE;
 
@@ -47,4 +50,11 @@ public class PlaceController {
 
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/all")
+    public List<PlaceResourceWithDescAndTime> getAllPlaces() {
+        return placeService.getAllPlaces();
+    }
+
+
 }

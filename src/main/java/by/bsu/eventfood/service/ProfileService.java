@@ -1,7 +1,7 @@
 package by.bsu.eventfood.service;
 
 import by.bsu.eventfood.controller.resource.ProfileResource;
-import by.bsu.eventfood.controller.resource.ProfileResource.ShortPlaceResource;
+import by.bsu.eventfood.controller.resource.ShortPlaceResource;
 import by.bsu.eventfood.model.Client;
 
 import java.util.List;

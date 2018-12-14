@@ -13,6 +13,7 @@ import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.apache.logging.log4j.util.Strings.EMPTY;
@@ -37,6 +38,19 @@ public abstract class PlaceMapper {
 
     public String mapTypesOfTables(List<TableTypeDto> typesOfTables) {
         return mapListToJsonString(typesOfTables);
+    }
+
+    public List<WorkingHourDto> mapTime(String workingHours) {
+        List<WorkingHourDto> workingHourDtos = null;
+
+        try {
+            workingHourDtos = objectMapper.readValue(workingHours, objectMapper.getTypeFactory()
+                    .constructCollectionType(List.class, WorkingHourDto.class));
+        } catch (IOException e) {
+            log.error("Failed map json string to object {}", e.getMessage());
+        }
+
+        return workingHourDtos;
     }
 
     private String mapListToJsonString(List dtos) {

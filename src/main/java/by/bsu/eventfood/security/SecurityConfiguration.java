@@ -51,11 +51,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .hasAuthority(GENERAL_CLIENT.name())
                     .antMatchers(HttpMethod.POST, "/reservation/**")
                         .hasAnyAuthority("ROLE_ANONYMOUS", GENERAL_CLIENT.name())
-                    .antMatchers(
+                    .antMatchers(HttpMethod.GET,
                             "/actuator/**","/sign-in", "/sign-up",
                             "/swagger-resources/**", "/swagger-ui.html",
                             "/v2/api-docs/**", "/webjars/**,",
-                            "/profile/{id}")
+                            "/profile/{id}",
+                            "/place/all")
                         .permitAll()
                 .anyRequest().authenticated();
     }
