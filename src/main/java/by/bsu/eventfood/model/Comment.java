@@ -20,7 +20,7 @@ public class Comment {
     @Id
     @SequenceGenerator(name = "commentSequenceGenerator", sequenceName = "comment_sequence", allocationSize = 1)
     @GeneratedValue(generator = "commentSequenceGenerator", strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_client")
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne
