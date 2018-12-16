@@ -12,5 +12,5 @@ import java.util.List;
 public interface EventRepository extends CrudRepository<Event, Long> {
     List<Event> findAllByPlaceId(Long placeId);
 
-    List<PlaceProjection> findEventsByFinishDateAfter(Date date);
+    List<PlaceProjection> findDistinctByFinishDateAfter(Date date);
 }

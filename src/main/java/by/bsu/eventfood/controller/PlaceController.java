@@ -53,7 +53,7 @@ public class PlaceController {
 
     @GetMapping("/all")
     public List<PlaceResourceWithDescAndTime> getAllPlaces() {
-        return placeService.getAllPlaces();
+        return placeService.getAllPlacesWithNotExpiredEvents();
     }
 
 

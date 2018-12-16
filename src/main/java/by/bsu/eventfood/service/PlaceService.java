@@ -11,5 +11,5 @@ public interface PlaceService {
 
     void updatePlace(AddPlaceDto addPlaceDto, Long placeId);
 
-    List<PlaceResourceWithDescAndTime> getAllPlaces();
+    List<PlaceResourceWithDescAndTime> getAllPlacesWithNotExpiredEvents();
 }

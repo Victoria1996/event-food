@@ -43,20 +43,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/event/**", "/place/**")
+                    .antMatchers(HttpMethod.POST,
+                            "/event/**", "/place/**")
                         .hasAuthority(BUSINESS_CLIENT.name())
-                    .antMatchers(HttpMethod.GET, "/profile/add-event")
-                        .hasAuthority(BUSINESS_CLIENT.name())
-                    .antMatchers(HttpMethod.POST, "/comment/**")
-                        .hasAuthority(GENERAL_CLIENT.name())
-                    .antMatchers(HttpMethod.POST, "/reservation/**")
-                        .hasAnyAuthority("ROLE_ANONYMOUS", GENERAL_CLIENT.name())
+
                     .antMatchers(HttpMethod.GET,
-                            "/actuator/**","/sign-in", "/sign-up",
+                            "/profile/add-event")
+                        .hasAuthority(BUSINESS_CLIENT.name())
+
+                    .antMatchers(HttpMethod.POST,
+                            "/comment/**")
+                        .hasAuthority(GENERAL_CLIENT.name())
+
+                    .antMatchers(HttpMethod.POST,
+                            "/reservation/**")
+                        .hasAnyAuthority("ROLE_ANONYMOUS", GENERAL_CLIENT.name())
+
+                    .antMatchers("/actuator/**","/sign-in", "/sign-up",
                             "/swagger-resources/**", "/swagger-ui.html",
-                            "/v2/api-docs/**", "/webjars/**,",
-                            "/profile/{id}",
-                            "/place/all")
+                            "/v2/api-docs/**", "/webjars/**,")
+                        .permitAll()
+
+                    .antMatchers(HttpMethod.GET,
+                            "/profile/{id}", "/place/all")
                         .permitAll()
                 .anyRequest().authenticated();
     }

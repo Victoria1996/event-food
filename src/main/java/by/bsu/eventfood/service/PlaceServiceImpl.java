@@ -56,8 +56,8 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public List<PlaceResourceWithDescAndTime> getAllPlaces() {
-        return eventRepository.findEventsByFinishDateAfter(new Date())
+    public List<PlaceResourceWithDescAndTime> getAllPlacesWithNotExpiredEvents() {
+        return eventRepository.findDistinctByFinishDateAfter(new Date())
                 .stream()
                 .map(PlaceProjection::getPlace)
                 .map(PlaceResourceWithDescAndTime::new)
