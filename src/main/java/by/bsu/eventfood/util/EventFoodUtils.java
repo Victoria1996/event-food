@@ -6,6 +6,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class EventFoodUtils {
     private final static int RANDOM_MAX_ADDED_DAYS = 3;
+    private final static int SHORT_TEXT_LENGTH = 300;
+    private final static String SHORT_TEX_ENDS_POSTIFX = "...";
 
     public static Date parseDate(Date date, int hours, int minutes) {
         Calendar calendar = Calendar.getInstance();
@@ -26,5 +28,17 @@ public class EventFoodUtils {
 
     public static boolean isDateExpired(Date date) {
         return date.after(new Date());
+    }
+
+    public static String shortText(String text) {
+        if (text == null) {
+            return null;
+        }
+
+        if (text.length() < SHORT_TEXT_LENGTH) {
+            return text;
+        }
+
+        return text.substring(0, Math.min(text.length(), SHORT_TEXT_LENGTH)) + SHORT_TEX_ENDS_POSTIFX;
     }
 }

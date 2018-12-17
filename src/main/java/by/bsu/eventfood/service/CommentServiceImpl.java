@@ -1,6 +1,7 @@
 package by.bsu.eventfood.service;
 
 import by.bsu.eventfood.controller.dto.AddCommentDto;
+import by.bsu.eventfood.controller.dto.CommentDto;
 import by.bsu.eventfood.model.Client;
 import by.bsu.eventfood.model.Comment;
 import by.bsu.eventfood.repository.CommentRepository;
@@ -9,6 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Slf4j
@@ -37,6 +42,13 @@ public class CommentServiceImpl implements CommentService {
                 .filter(comment -> comment.getClient().getId().equals(client.getId()))
                 .map(this::deleteComment)
                 .orElse("error: not exists or not belongs to user");
+    }
+
+    @Override
+    public List<CommentDto> findPlaceComments(Long placeId) {
+        return commentRepository.findAllByPlaceId(placeId).stream()
+                .map(commentMapper::mapCommentDto)
+                .collect(toList());
     }
 
     private String deleteComment(Comment comment) {

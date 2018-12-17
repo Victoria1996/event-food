@@ -65,7 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .permitAll()
 
                     .antMatchers(HttpMethod.GET,
-                            "/profile/{id}", "/place/all")
+                            "/profile/{id}", "/place/all","/place/{id}")
                         .permitAll()
                 .anyRequest().authenticated();
     }

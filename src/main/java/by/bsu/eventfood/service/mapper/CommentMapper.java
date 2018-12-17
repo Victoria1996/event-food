@@ -1,6 +1,7 @@
 package by.bsu.eventfood.service.mapper;
 
 import by.bsu.eventfood.controller.dto.AddCommentDto;
+import by.bsu.eventfood.controller.dto.CommentDto;
 import by.bsu.eventfood.model.Comment;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
@@ -21,4 +22,11 @@ public interface CommentMapper {
         comment.setCreated(currentDate);
         comment.setModified(currentDate);
     }
+
+
+    @Mappings({
+            @Mapping(target = "comment", source = "text"),
+            @Mapping(target = "clientId", source = "client.id"),
+            @Mapping(target = "userName", source = "client.name")})
+    CommentDto mapCommentDto(Comment comment);
 }

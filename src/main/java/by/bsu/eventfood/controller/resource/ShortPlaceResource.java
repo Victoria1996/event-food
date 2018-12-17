@@ -24,7 +24,7 @@ public class ShortPlaceResource extends ResourceSupport {
         address = place.getAddress();
         this.placeId = id;
 
-        add(linkTo(methodOn(PlaceController.class).getPlace(valueOf(id))).withRel("link"));
+        add(linkTo(methodOn(PlaceController.class).getPlace(id,null)).withRel("link"));
         add(linkTo(methodOn(PlaceController.class).updatePlace(null, id)).withRel("updateLink"));
     }
 }
