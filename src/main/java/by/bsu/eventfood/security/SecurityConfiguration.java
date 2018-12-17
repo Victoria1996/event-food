@@ -61,11 +61,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                     .antMatchers("/actuator/**","/sign-in", "/sign-up",
                             "/swagger-resources/**", "/swagger-ui.html",
-                            "/v2/api-docs/**", "/webjars/**,")
+                            "/v2/api-docs/**", "/webjars/**")
                         .permitAll()
 
                     .antMatchers(HttpMethod.GET,
-                            "/profile/{id}", "/place/all","/place/{id}")
+                            "/profile/{id}", "/place/all","/place/{id}","/place/{id}/reserve")
                         .permitAll()
                 .anyRequest().authenticated();
     }
