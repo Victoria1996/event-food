@@ -58,4 +58,8 @@ public class ReservationPlace {
 
     @Column(name = "user_phone_number")
     private String userPhoneNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "id_of_table")
+    private TableType tableType;
 }

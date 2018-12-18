@@ -13,4 +13,7 @@ import lombok.NoArgsConstructor;
 public class TableTypeDto {
     private String name;
     private int number;
+    private Long id;
+
+    private boolean available = true;
 }

@@ -1,6 +1,7 @@
 package by.bsu.eventfood.controller;
 
 import by.bsu.eventfood.controller.dto.AddPlaceDto;
+import by.bsu.eventfood.controller.dto.PlaceReservationDto;
 import by.bsu.eventfood.controller.dto.ResponseDto;
 import by.bsu.eventfood.controller.resource.PlaceResourceById;
 import by.bsu.eventfood.controller.resource.PlaceResourceWithDescAndTime;
@@ -10,13 +11,16 @@ import by.bsu.eventfood.service.EventService;
 import by.bsu.eventfood.service.PlaceService;
 import by.bsu.eventfood.service.RoleActionUrlResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 import static by.bsu.eventfood.service.RoleActionUrlResolver.ActionUrl.ADD_PLACE;
+import static by.bsu.eventfood.util.EventFoodUtils.parseDate;
 
 @RestController
 @RequestMapping("/place")
@@ -56,8 +60,23 @@ public class PlaceController {
     }
 
     @GetMapping("/{id}/reserve")
-    public ResponseEntity getReservePlace(@PathVariable Long id) {
-        return null;
+    public PlaceReservationDto getReservePlace(
+            @PathVariable Long id,
+            @RequestParam("hours") int hours,
+            @RequestParam("minutes") int minutes,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam("date") Date date,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
+
+        PlaceReservationDto placeReservation = placeService.getPlaceReservation(id, parseDate(date, hours, minutes));
+
+        if (placeReservation != null && customUserDetails != null) {
+            placeReservation.setUserName(customUserDetails.getClient().getName());
+            placeReservation.setUserPhoneNumber(customUserDetails.getClient().getEmail());
+        }
+
+        return placeReservation;
     }
 
     @GetMapping("/all")

@@ -1,7 +1,7 @@
 package by.bsu.eventfood.service.mapper;
 
 import by.bsu.eventfood.controller.dto.AddPlaceDto;
-import by.bsu.eventfood.controller.dto.TableTypeDto;
+import by.bsu.eventfood.controller.dto.PlaceReservationDto;
 import by.bsu.eventfood.controller.dto.WorkingHourDto;
 import by.bsu.eventfood.model.Place;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,7 +19,7 @@ import java.util.List;
 import static org.apache.logging.log4j.util.Strings.EMPTY;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
-@Mapper
+@Mapper(uses = TableTypeMapper.class)
 @Component
 @Slf4j
 public abstract class PlaceMapper {
@@ -28,16 +28,13 @@ public abstract class PlaceMapper {
     private ObjectMapper objectMapper;
 
     @Mappings({
-            @Mapping(target = "placeNumber", source = "fullNumberOfPlaces")
+            @Mapping(target = "placeNumber", source = "fullNumberOfPlaces"),
+            @Mapping(ignore = true, target = "typesOfTables")
     })
     public abstract Place map(AddPlaceDto addPlaceDto);
 
     public String mapWorkingHours(List<WorkingHourDto> workingHours) {
         return mapListToJsonString(workingHours);
-    }
-
-    public String mapTypesOfTables(List<TableTypeDto> typesOfTables) {
-        return mapListToJsonString(typesOfTables);
     }
 
     public List<WorkingHourDto> mapTime(String workingHours) {
@@ -52,6 +49,12 @@ public abstract class PlaceMapper {
 
         return workingHourDtos;
     }
+
+    @Mappings({
+            @Mapping(target = "placeId", source = "id"),
+            @Mapping(target = "placeName", source = "name")
+    })
+    public abstract PlaceReservationDto map(Place place);
 
     private String mapListToJsonString(List dtos) {
         String result = EMPTY;

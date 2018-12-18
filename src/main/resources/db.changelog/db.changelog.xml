@@ -116,4 +116,31 @@
             <column name="user_phone_number" type="nvarchar(max)"/>
         </addColumn>
     </changeSet>
+
+    <changeSet id="create tableType table" author="Victoria1996">
+        <sql>CREATE SEQUENCE table_type_sequence
+            START WITH 1
+            INCREMENT BY 1
+            MINVALUE 1
+            MAXVALUE 9223372036854775807
+            NO CYCLE
+            CACHE 10;
+        </sql>
+        <createTable tableName="table_type">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="place_id" type="int">
+                <constraints foreignKeyName="FK_table_type_place_id" references="place(id_place)" nullable="false"/>
+            </column>
+            <column name="name" type="nvarchar(max)"/>
+            <column name="number" type="bigint"/>
+        </createTable>
+        <dropColumn tableName="Place" columnName="types_of_tables"/>
+        <addColumn tableName="Reservation_place">
+            <column name="id_of_table" type="bigint">
+                <constraints foreignKeyName="FK_reservation_place_id_of_table" references="table_type(id)"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

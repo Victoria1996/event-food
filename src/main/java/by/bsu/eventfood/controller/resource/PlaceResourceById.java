@@ -24,6 +24,6 @@ public class PlaceResourceById extends PlaceResourceWithDescAndTime {
         super(place);
 
         add(linkTo(methodOn(PlaceController.class)
-                .getReservePlace(place.getId())).withRel("reserverLink"));
+                .getReservePlace(place.getId(), 0, 0, null, null)).withRel("reserverLink"));
     }
 }

@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
+
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "Place")
@@ -42,6 +45,6 @@ public class Place {
     @Column(name = "working_hours")
     private String workingHours;
 
-    @Column(name = "types_of_tables")
-    private String typesOfTables;
+    @OneToMany(fetch = EAGER, mappedBy = "place")
+    private List<TableType> typesOfTables;
 }

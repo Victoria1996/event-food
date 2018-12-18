@@ -17,7 +17,8 @@ public interface ReservationMapper {
 
     @Mappings({
             @Mapping(target = "place", source = "id"),
-            @Mapping(target = "id", source = "id", ignore = true)})
+            @Mapping(target = "id", source = "id", ignore = true),
+            @Mapping(target = "tableType", source = "idOfTable")})
     ReservationPlace mapPlace(ReservationDto dto);
 
     @Mappings({

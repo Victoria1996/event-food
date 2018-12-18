@@ -26,6 +26,15 @@ public class EventFoodUtils {
         return calendar.getTime();
     }
 
+    public static Date addHours(Date date, int hours) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY,hours);
+
+        return calendar.getTime();
+    }
+
+
     public static boolean isDateExpired(Date date) {
         return date.after(new Date());
     }

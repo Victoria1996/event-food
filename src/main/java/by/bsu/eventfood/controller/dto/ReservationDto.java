@@ -18,6 +18,8 @@ public class ReservationDto {
     private String userName;
     private String userPhoneNumber;
     private String comment;
+
+    private Long idOfTable;
     /**
      * Start date
      */
