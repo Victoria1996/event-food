@@ -18,13 +18,13 @@ CREATE TABLE [dbo].[Role] (
 CREATE TABLE [dbo].[Client] (
   [id_client]         [int]           NOT NULL,
   [email]             [nvarchar](70)  NULL,
-  [registration_date] [date]          NULL,
+  [registration_date] [datetime]          NULL,
   [client_name]       [nvarchar](80)  NULL,
   [id_role]           [int]           NOT NULL,
   [password]          [nvarchar](150) NULL,
-  [created]           [date]          NULL,
-  [modified]          [date]          NULL,
-  [deleted]           [date]          NULL,
+  [created]           [datetime]          NULL,
+  [modified]          [datetime]          NULL,
+  [deleted]           [datetime]          NULL,
   CONSTRAINT [PK_Clients] PRIMARY KEY CLUSTERED
     (
       [id_client] ASC
@@ -53,9 +53,9 @@ CREATE TABLE [dbo].[Place] (
 
 CREATE TABLE [dbo].[Event] (
   [id_event]                 [int]           NOT NULL,
-  [start_date]               [date]          NULL,
-  [finish_date]              [date]          NULL,
-  [cancel_registration_date] [date]          NULL,
+  [start_date]               [datetime]          NULL,
+  [finish_date]              [datetime]          NULL,
+  [cancel_registration_date] [datetime]          NULL,
   [status]                   [nvarchar](50)  NULL,
   [id_place]                 [int]           NULL,
   [event_number]             [int]           NULL,
@@ -77,10 +77,10 @@ CREATE TABLE [dbo].[Reservation_place] (
   [id_reservation] [int]  NOT NULL,
   [id_place]       [int]  NULL,
   [id_client]      [int]  NULL,
-  [reservation_date] [date] NULL,
-  [created]        [date] NULL,
-  [modified]       [date] NULL,
-  [deleted]    [date] NULL,
+  [reservation_date] [datetime] NULL,
+  [created]        [datetime] NULL,
+  [modified]       [datetime] NULL,
+  [deleted]    [datetime] NULL,
   CONSTRAINT [PK_Reservation_place] PRIMARY KEY CLUSTERED
     (
       [id_reservation] ASC
@@ -93,10 +93,10 @@ CREATE TABLE [dbo].[Reservation_event] (
   [id_reservation] [int]  NOT NULL,
   [id_event]   [int]  NULL,
   [id_client]  [int]  NULL,
-  [reservation_date] [date] NULL,
-  [created]    [date] NULL,
-  [modified]   [date] NULL,
-  [deleted]    [date] NULL,
+  [reservation_date] [datetime] NULL,
+  [created]    [datetime] NULL,
+  [modified]   [datetime] NULL,
+  [deleted]    [datetime] NULL,
   CONSTRAINT [PK_Reservation_event] PRIMARY KEY CLUSTERED
     (
       [id_reservation] ASC
