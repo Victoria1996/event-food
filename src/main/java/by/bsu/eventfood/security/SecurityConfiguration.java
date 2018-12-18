@@ -1,6 +1,7 @@
 package by.bsu.eventfood.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,6 +27,9 @@ import static org.apache.logging.log4j.util.Strings.EMPTY;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Value("${allowed-origins}")
+    private String[] allowedOrigins;
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -93,7 +97,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
+                registry
+                        .addMapping("/**")
+                        .allowCredentials(true)
+                        .allowedOrigins(allowedOrigins);
             }
         };
     }
