@@ -1,6 +1,7 @@
 package by.bsu.eventfood.service;
 
 import by.bsu.eventfood.controller.dto.AddEventDto;
+import by.bsu.eventfood.controller.resource.EventWithPlaceResource;
 import by.bsu.eventfood.controller.resource.PlaceResourceWithDescAndTime;
 import by.bsu.eventfood.controller.resource.ShortEventResource;
 import by.bsu.eventfood.model.Event;
@@ -71,6 +72,13 @@ public class EventServiceImpl implements EventService {
                 .map(PlaceResourceWithDescAndTime::new)
                 .peek(p -> p.setTime(placeMapper.mapTime(p.getTimeAsJsonString())))
                 .peek(p -> p.setShortDescription(shortText(p.getDescription())))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EventWithPlaceResource> getAllEvents() {
+        return eventRepository.findAll().stream()
+                .map(EventWithPlaceResource::new)
                 .collect(Collectors.toList());
     }
 }

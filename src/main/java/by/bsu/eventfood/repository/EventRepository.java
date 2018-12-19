@@ -13,4 +13,6 @@ public interface EventRepository extends CrudRepository<Event, Long> {
     List<Event> findAllByPlaceId(Long placeId);
 
     List<PlaceProjection> findDistinctByFinishDateAfter(Date date);
+
+    List<Event> findAll();
 }

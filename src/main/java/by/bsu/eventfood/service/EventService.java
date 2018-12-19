@@ -1,6 +1,7 @@
 package by.bsu.eventfood.service;
 
 import by.bsu.eventfood.controller.dto.AddEventDto;
+import by.bsu.eventfood.controller.resource.EventWithPlaceResource;
 import by.bsu.eventfood.controller.resource.PlaceResourceWithDescAndTime;
 import by.bsu.eventfood.controller.resource.ShortEventResource;
 
@@ -14,4 +15,6 @@ public interface EventService {
     List<ShortEventResource> findPlaceEvents(Long placeId);
 
     List<PlaceResourceWithDescAndTime> getAllPlacesWithNotExpiredEvents();
+
+    List<EventWithPlaceResource> getAllEvents();
 }
