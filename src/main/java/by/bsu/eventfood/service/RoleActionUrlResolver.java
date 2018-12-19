@@ -13,21 +13,21 @@ import static org.apache.logging.log4j.util.Strings.EMPTY;
 public interface RoleActionUrlResolver {
     enum ActionUrl {
         SIGN_UP(new HashMap() {{
-            put(GENERAL_CLIENT, "/u1");
-            put(BUSINESS_CLIENT, "/u2");
+            put(GENERAL_CLIENT, "/place/all");
+            put(BUSINESS_CLIENT, "/profile");
         }}),
 
         SIGN_IN(new HashMap() {{
-            put(GENERAL_CLIENT, "/u3");
-            put(BUSINESS_CLIENT, "/u4");
+            put(GENERAL_CLIENT, "/place/all");
+            put(BUSINESS_CLIENT, "/profile");
         }}),
 
         ADD_PLACE(new HashMap() {{
-            put(BUSINESS_CLIENT, "/u4");
+            put(BUSINESS_CLIENT, "/profile");
         }}),
 
         ADD_EVENT(new HashMap() {{
-            put(BUSINESS_CLIENT, "/u4");
+            put(BUSINESS_CLIENT, "/profile");
         }});
 
         HashMap<RoleName, String> mapping;
