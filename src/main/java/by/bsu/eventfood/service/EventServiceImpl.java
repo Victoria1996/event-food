@@ -1,6 +1,7 @@
 package by.bsu.eventfood.service;
 
 import by.bsu.eventfood.controller.dto.AddEventDto;
+import by.bsu.eventfood.controller.resource.EventByIdResource;
 import by.bsu.eventfood.controller.resource.EventWithPlaceResource;
 import by.bsu.eventfood.controller.resource.PlaceResourceWithDescAndTime;
 import by.bsu.eventfood.controller.resource.ShortEventResource;
@@ -9,6 +10,7 @@ import by.bsu.eventfood.model.projection.PlaceProjection;
 import by.bsu.eventfood.repository.EventRepository;
 import by.bsu.eventfood.service.mapper.EventMapper;
 import by.bsu.eventfood.service.mapper.PlaceMapper;
+import by.bsu.eventfood.service.mapper.TableTypeMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,6 @@ import static by.bsu.eventfood.util.EventFoodUtils.shortText;
 @Service
 @Slf4j
 public class EventServiceImpl implements EventService {
-
     @Autowired
     private EventRepository eventRepository;
 
@@ -31,6 +32,12 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private PlaceMapper placeMapper;
+
+    @Autowired
+    private TableTypeMapper tableTypeMapper;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Override
     public void addEvent(AddEventDto dto) {
@@ -80,5 +87,25 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findAll().stream()
                 .map(EventWithPlaceResource::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public EventByIdResource findEvent(Long id, Date from) {
+        return eventRepository.findById(id)
+                .map(e -> {
+                    EventByIdResource eventByIdResource = new EventByIdResource(e);
+
+                    eventByIdResource.setTypesOfTables(
+                            e.getPlace().getTypesOfTables()
+                                    .stream()
+                                    .map(tableTypeMapper::map)
+                                    .collect(Collectors.toList())
+                    );
+
+                    reservationService.enrichWithAvailableTables(eventByIdResource, from);
+
+                    return eventByIdResource;
+                })
+                .orElse(null);
     }
 }

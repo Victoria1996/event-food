@@ -1,13 +1,20 @@
 package by.bsu.eventfood.controller;
 
 import by.bsu.eventfood.controller.dto.AddEventDto;
+import by.bsu.eventfood.controller.resource.EventByIdResource;
 import by.bsu.eventfood.controller.resource.EventWithPlaceResource;
+import by.bsu.eventfood.security.CustomUserDetails;
 import by.bsu.eventfood.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+
+import static by.bsu.eventfood.util.EventFoodUtils.parseDate;
 
 @RestController
 @RequestMapping("/event")
@@ -32,9 +39,20 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getEvent(@PathVariable String id) {
+    public EventByIdResource getEvent(@PathVariable Long id,
+                                      @RequestParam("hours") int hours,
+                                      @RequestParam("minutes") int minutes,
+                                      @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                      @RequestParam("date") Date date,
+                                      @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        EventByIdResource resource = eventService.findEvent(id, parseDate(date, hours, minutes));
 
-        return ResponseEntity.ok().build();
+        if (resource != null && customUserDetails != null) {
+            resource.setUserName(customUserDetails.getClient().getName());
+            resource.setUserPhoneNumber(customUserDetails.getClient().getEmail());
+        }
+
+        return resource;
     }
 
     @GetMapping("/all")

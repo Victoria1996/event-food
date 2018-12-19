@@ -2,6 +2,7 @@ package by.bsu.eventfood.service;
 
 import by.bsu.eventfood.controller.dto.PlaceReservationDto;
 import by.bsu.eventfood.controller.dto.ReservationDto;
+import by.bsu.eventfood.controller.resource.EventByIdResource;
 import by.bsu.eventfood.model.Client;
 import by.bsu.eventfood.model.ReservationEvent;
 import by.bsu.eventfood.model.ReservationPlace;
@@ -65,6 +66,19 @@ public class ReservationServiceImpl implements ReservationService {
         List<TableTypeProjection> reservedTables = placeRepository
                 .findAllByPlaceIdAndReservationTimeBetween(dto.getPlaceId(),
                         date, addHours(date, RESERVATION_HOUR));
+
+        if (!isEmpty(reservedTables)) {
+            dto.getTypesOfTables().stream()
+                    .filter(reservedTables::contains)
+                    .peek(t -> t.setAvailable(false));
+        }
+    }
+
+    @Override
+    public void enrichWithAvailableTables(EventByIdResource dto, Date from) {
+        List<TableTypeProjection> reservedTables = placeRepository
+                .findAllByPlaceIdAndReservationTimeBetween(dto.getPlaceId(),
+                        from, addHours(from, RESERVATION_HOUR));
 
         if (!isEmpty(reservedTables)) {
             dto.getTypesOfTables().stream()

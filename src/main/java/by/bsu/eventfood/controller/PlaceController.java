@@ -67,8 +67,6 @@ public class PlaceController {
             @DateTimeFormat(pattern = "yyyy-MM-dd")
             @RequestParam("date") Date date,
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-
-
         PlaceReservationDto placeReservation = placeService.getPlaceReservation(id, parseDate(date, hours, minutes));
 
         if (placeReservation != null && customUserDetails != null) {

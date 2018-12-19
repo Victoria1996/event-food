@@ -6,7 +6,6 @@ import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
 
 import static by.bsu.eventfood.util.EventFoodUtils.isDateExpired;
-import static java.lang.String.valueOf;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
@@ -20,7 +19,7 @@ public class ShortEventResource extends ResourceSupport {
         name = event.getEventName();
         isEnded = isDateExpired(event.getFinishDate());
 
-        add(linkTo(methodOn(EventController.class).getEvent(valueOf(id))).withRel("link"));
+        add(linkTo(methodOn(EventController.class).getEvent(id,0,0,null,null)).withRel("link"));
         add(linkTo(methodOn(EventController.class).updateEvent(null, id)).withRel("updateLink"));
     }
 }
