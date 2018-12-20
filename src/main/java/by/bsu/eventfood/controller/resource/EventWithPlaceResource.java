@@ -7,7 +7,9 @@ import lombok.Getter;
 public class EventWithPlaceResource {
     public EventWithPlaceResource(Event event) {
         this.event = new ShortEventResource(event);
-        place = new ShortPlaceResource(event.getPlace());
+        if (event.getPlace() != null) {
+            place = new ShortPlaceResource(event.getPlace());
+        }
     }
 
     private ShortEventResource event;

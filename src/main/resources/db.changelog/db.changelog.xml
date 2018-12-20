@@ -143,4 +143,11 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="link event without place to client" author="Victoria1996">
+        <addColumn tableName="Event">
+            <column name="id_client" type="int">
+                <constraints foreignKeyName="FK_event_id_client" references="client(id_client)"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -105,12 +105,14 @@ public class EventServiceImpl implements EventService {
                 .map(e -> {
                     EventByIdResource eventByIdResource = new EventByIdResource(e);
 
-                    eventByIdResource.setTypesOfTables(
-                            e.getPlace().getTypesOfTables()
-                                    .stream()
-                                    .map(tableTypeMapper::map)
-                                    .collect(Collectors.toList())
-                    );
+                    if (e.getPlace() != null) {
+                        eventByIdResource.setTypesOfTables(
+                                e.getPlace().getTypesOfTables()
+                                        .stream()
+                                        .map(tableTypeMapper::map)
+                                        .collect(Collectors.toList())
+                        );
+                    }
 
                     reservationService.enrichWithAvailableTables(eventByIdResource, from);
 

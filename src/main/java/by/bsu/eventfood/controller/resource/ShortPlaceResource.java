@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
 
-import static java.lang.String.valueOf;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
@@ -24,7 +23,7 @@ public class ShortPlaceResource extends ResourceSupport {
         address = place.getAddress();
         this.placeId = id;
 
-        add(linkTo(methodOn(PlaceController.class).getPlace(id,null)).withRel("link"));
+        add(linkTo(methodOn(PlaceController.class).getPlace(id, null)).withRel("link"));
         add(linkTo(methodOn(PlaceController.class).updatePlace(null, id)).withRel("updateLink"));
     }
 }

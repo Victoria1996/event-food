@@ -43,6 +43,10 @@ public class Event {
     @JoinColumn(name = "id_place")
     private Place place;
 
+    @ManyToOne
+    @JoinColumn(name = "id_client")
+    private Client client;
+
     @Column(name = "event_number")
     private int eventNumber;
 

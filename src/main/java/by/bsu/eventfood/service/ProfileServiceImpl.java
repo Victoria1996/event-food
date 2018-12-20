@@ -54,6 +54,14 @@ public class ProfileServiceImpl implements ProfileService {
                                 .forEach(event -> profileResource
                                         .addEvent(new ShortEventResource(event)));
                     });
+
+            /**
+             * Enrich with events without places.
+             */
+            eventRepository
+                    .findAllByClientIdAndPlaceIdIsNull(clientId)
+                    .forEach(event -> profileResource
+                            .addEvent(new ShortEventResource(event)));
         }
 
         if (GENERAL_CLIENT.equals(roleName)) {
@@ -85,7 +93,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileResource getProfileInfo(Long id) {
         return clientRepository.findById(id)
-                .map(ProfileResource::new)
+                .map(this::getCurrentProfileInfo)
                 .orElse(null);
     }
 

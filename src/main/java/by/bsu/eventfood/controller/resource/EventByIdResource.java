@@ -27,6 +27,9 @@ public class EventByIdResource extends EventWithPlaceResource {
         super(event);
         dateTimeStart = event.getStartDate();
         description = event.getEventDescription();
-        placeId = event.getPlace().getId();
+
+        if (event.getPlace() != null) {
+            placeId = event.getPlace().getId();
+        }
     }
 }

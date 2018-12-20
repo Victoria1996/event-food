@@ -6,6 +6,7 @@ import by.bsu.eventfood.controller.PlaceController;
 import by.bsu.eventfood.model.Client;
 import by.bsu.eventfood.model.RoleName;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Getter
+@Setter
 public class ProfileResource extends ResourceSupport {
     private final String name;
     private final String email;
@@ -32,7 +34,7 @@ public class ProfileResource extends ResourceSupport {
         places = new ArrayList();
 
         add(linkTo(methodOn(PlaceController.class).addPlace(null, null)).withRel("linkToAddPlace"));
-        add(linkTo(methodOn(EventController.class).addEvent(null)).withRel("linkToAddEvent"));
+        add(linkTo(methodOn(EventController.class).addEvent(null, null)).withRel("linkToAddEvent"));
     }
 
     public void addEvent(ShortEventResource resource) {

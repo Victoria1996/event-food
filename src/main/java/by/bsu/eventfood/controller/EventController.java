@@ -24,7 +24,10 @@ public class EventController {
     private EventService eventService;
 
     @PostMapping("/add")
-    public ResponseEntity addEvent(@RequestBody AddEventDto addEventDto) {
+    public ResponseEntity addEvent(
+            @RequestBody AddEventDto addEventDto,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        addEventDto.setClient(customUserDetails.getClient());
         eventService.addEvent(addEventDto);
 
         return ResponseEntity.ok().build();

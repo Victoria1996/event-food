@@ -28,7 +28,12 @@ public class ProfileController {
 
     @GetMapping("/{id}")
     public ProfileResource getProfile(@PathVariable Long id) {
-        return profileService.getProfileInfo(id);
+        ProfileResource profileInfo = profileService.getProfileInfo(id);
+        if (profileInfo != null) {
+            profileInfo.setPlaces(null);
+        }
+
+        return profileInfo;
     }
 
     @GetMapping("/add-event")
