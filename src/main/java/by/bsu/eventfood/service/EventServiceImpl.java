@@ -89,8 +89,12 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventWithPlaceResource> getAllEvents() {
-        return eventRepository.findAll().stream()
+    public List<EventWithPlaceResource> getAllEvents(boolean isEnded) {
+        List<Event> events = isEnded ?
+                eventRepository.findAll() :
+                eventRepository.findAllByFinishDateAfter(new Date());
+
+        return events.stream()
                 .map(EventWithPlaceResource::new)
                 .collect(Collectors.toList());
     }

@@ -56,8 +56,8 @@ public class EventController {
     }
 
     @GetMapping("/all")
-    public List<EventWithPlaceResource> getEvents() {
-        return eventService.getAllEvents();
+    public List<EventWithPlaceResource> getEvents(@RequestParam boolean isEnded) {
+        return eventService.getAllEvents(isEnded);
     }
 
 }

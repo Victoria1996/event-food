@@ -18,7 +18,7 @@ public interface EventService {
 
     List<PlaceResourceWithDescAndTime> getAllPlaces(boolean hasActiveEvents);
 
-    List<EventWithPlaceResource> getAllEvents();
+    List<EventWithPlaceResource> getAllEvents(boolean isEnded);
 
     EventByIdResource findEvent(Long id, Date parseDate);
 }
