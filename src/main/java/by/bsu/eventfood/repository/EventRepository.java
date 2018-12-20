@@ -16,7 +16,7 @@ public interface EventRepository extends CrudRepository<Event, Long> {
 
     List<Event> findAllByClientIdAndPlaceIdIsNull(Long clientId);
 
-    List<PlaceProjection> findDistinctByFinishDateAfter(Date date);
+    List<PlaceProjection> findDistinctByFinishDateAfterAndPlaceIsNotNull(Date date);
 
     @Query("select distinct e.place from Event e")
     List<Place> findPlaces();

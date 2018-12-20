@@ -80,7 +80,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<PlaceResourceWithDescAndTime> getAllPlaces(boolean hasActiveEvents) {
         List<Place> placeProjections = hasActiveEvents ?
-                eventRepository.findDistinctByFinishDateAfter(new Date())
+                eventRepository.findDistinctByFinishDateAfterAndPlaceIsNotNull(new Date())
                         .stream()
                         .map(PlaceProjection::getPlace)
                         .collect(Collectors.toList()) :
