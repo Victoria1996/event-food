@@ -6,6 +6,7 @@ import by.bsu.eventfood.controller.resource.EventWithPlaceResource;
 import by.bsu.eventfood.controller.resource.PlaceResourceWithDescAndTime;
 import by.bsu.eventfood.controller.resource.ShortEventResource;
 import by.bsu.eventfood.model.Event;
+import by.bsu.eventfood.model.Place;
 import by.bsu.eventfood.model.projection.PlaceProjection;
 import by.bsu.eventfood.repository.EventRepository;
 import by.bsu.eventfood.service.mapper.EventMapper;
@@ -72,10 +73,15 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<PlaceResourceWithDescAndTime> getAllPlacesWithNotExpiredEvents() {
-        return eventRepository.findDistinctByFinishDateAfter(new Date())
-                .stream()
-                .map(PlaceProjection::getPlace)
+    public List<PlaceResourceWithDescAndTime> getAllPlaces(boolean hasActiveEvents) {
+        List<Place> placeProjections = hasActiveEvents ?
+                eventRepository.findDistinctByFinishDateAfter(new Date())
+                        .stream()
+                        .map(PlaceProjection::getPlace)
+                        .collect(Collectors.toList()) :
+                eventRepository.findPlaces();
+
+        return placeProjections.stream()
                 .map(PlaceResourceWithDescAndTime::new)
                 .peek(p -> p.setTime(placeMapper.mapTime(p.getTimeAsJsonString())))
                 .peek(p -> p.setShortDescription(shortText(p.getDescription())))

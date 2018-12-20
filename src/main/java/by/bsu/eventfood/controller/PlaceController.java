@@ -78,7 +78,7 @@ public class PlaceController {
     }
 
     @GetMapping("/all")
-    public List<PlaceResourceWithDescAndTime> getAllPlaces() {
-        return eventService.getAllPlacesWithNotExpiredEvents();
+    public List<PlaceResourceWithDescAndTime> getAllPlaces(@RequestParam boolean hasActiveEvents) {
+        return eventService.getAllPlaces(hasActiveEvents);
     }
 }

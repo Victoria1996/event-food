@@ -16,7 +16,7 @@ public interface EventService {
 
     List<ShortEventResource> findPlaceEvents(Long placeId);
 
-    List<PlaceResourceWithDescAndTime> getAllPlacesWithNotExpiredEvents();
+    List<PlaceResourceWithDescAndTime> getAllPlaces(boolean hasActiveEvents);
 
     List<EventWithPlaceResource> getAllEvents();
 
