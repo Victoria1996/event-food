@@ -9,6 +9,7 @@ import by.bsu.eventfood.model.Event;
 import by.bsu.eventfood.model.Place;
 import by.bsu.eventfood.model.projection.PlaceProjection;
 import by.bsu.eventfood.repository.EventRepository;
+import by.bsu.eventfood.repository.PlaceRepository;
 import by.bsu.eventfood.service.mapper.EventMapper;
 import by.bsu.eventfood.service.mapper.PlaceMapper;
 import by.bsu.eventfood.service.mapper.TableTypeMapper;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static by.bsu.eventfood.util.EventFoodUtils.shortText;
 
@@ -39,6 +41,9 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    private PlaceRepository placeRepository;
 
     @Override
     public void addEvent(AddEventDto dto) {
@@ -81,7 +86,12 @@ public class EventServiceImpl implements EventService {
                         .collect(Collectors.toList()) :
                 eventRepository.findPlaces();
 
-        return placeProjections.stream()
+        List<Place> placesWithoutEvents = placeRepository.findAllByIdNotIn(
+                eventRepository.findPlaces().stream()
+                        .map(Place::getId)
+                        .collect(Collectors.toList()));
+
+        return Stream.concat(placeProjections.stream(), placesWithoutEvents.stream())
                 .map(PlaceResourceWithDescAndTime::new)
                 .peek(p -> p.setTime(placeMapper.mapTime(p.getTimeAsJsonString())))
                 .peek(p -> p.setShortDescription(shortText(p.getDescription())))

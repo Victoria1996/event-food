@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PlaceRepository extends CrudRepository<Place, Long> {
     List<Place> findAllPlaceByClientId(Long clientId);
+
+    List<Place> findAllByIdNotIn(List<Long> ids);
 }
